@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Add a gray background color with some padding */
+body {
+  font-family: Georgia;
+  padding: 20px;
+  background: #f1f1f1;
+}
+
+/* Header/Blog Title */
+.header {
+  padding: 140px;
+  color: white;
+  font-size: 40px;
+  text-align: center;
+  background-image: url("img/camp2.gif");
+}
+
+/* Create two unequal columns that floats next to each other */
+/* Left column */
+.leftcolumn {
+  float: left;
+  width: 75%;
+}
+
+/* Right column */
+.rightcolumn {
+  float: left;
+  width: 25%;
+  padding-left: 20px;
+}
+
+/* Fake image */
+.fakeimg {
+  background-color: #5DA4A8;
+  width: 100%;
+  padding: 20px;
+}
+
+/* Add a card effect for articles */
+.card {
+   background-color: white;
+   padding: 20px;
+   margin-top: 20px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Footer */
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: #18525A;
+  margin-top: 20px;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+    .leftcolumn, .rightcolumn {
+      width: 100%;
+     padding: 0;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h2>From the Beaver's Mouth</h2>
+</div>
+
+<div class="row">
+ <div class="leftcolumn">
+    <div class="card">
+      <h2>Gender Gap</h2>
+      <h5>RJ Mitchell, April 16, 2021</h5>
+
+      <script src="https://d3js.org/d3.v4.js"></script>
+
+      <!-- Create a div where the graph will take place -->
+      <div id="my_dataviz"></div>
+
+
+      <script>
+
+      // set the dimensions and margins of the graph
+      var margin = {top: 10, right: 30, bottom: 90, left: 40},
+          width = 460 - margin.left - margin.right,
+          height = 500 - margin.top - margin.bottom;
+
+      // append the svg object to the body of the page
+      var svg = d3.select("#my_dataviz")
+        .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+          .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+      // Parse the Data
+      d3.csv("https://github.com/Oliolipop11/hiohiohiijiji/blob/master/med.csv?raw=true", function(data) {
+
+      // X axis
+      var x = d3.scaleBand()
+        .range([ 0, width ])
+        .domain(data.map(function(d) { return d.Country; }))
+        .padding(1);
+      svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+          .attr("transform", "translate(-10,0)rotate(-45)")
+          .style("text-anchor", "end");
+
+      // Add Y axis
+      var y = d3.scaleLinear()
+        .domain([0, 65000])
+        .range([ height, 0]);
+      svg.append("g")
+        .call(d3.axisLeft(y));
+
+      // Lines
+      svg.selectAll("myline")
+        .data(data)
+        .enter()
+        .append("line")
+          .attr("x1", function(d) { return x(d.Country); })
+          .attr("x2", function(d) { return x(d.Country); })
+          .attr("y1", function(d) { return y(d.Value); })
+          .attr("y2", y(0))
+          .attr("stroke", "grey")
+
+      // Circles
+      svg.selectAll("mycircle")
+        .data(data)
+        .enter()
+        .append("circle")
+          .attr("cx", function(d) { return x(d.Country); })
+          .attr("cy", function(d) { return y(d.Value); })
+          .attr("r", "4")
+          .style("fill", "#69b3a2")
+          .attr("stroke", "black")
+      })
+
+      </script>
+      <h5>Graphic produced by Olivia Hobbs, April 16, 2021</h5>
+      <p>	For many countries around the world, there exists an income gap between genders, and Canada is one of those countries. Many Western capitalistic countries can gauge their status of economic equality through evaluating income gaps between genders, ethnicities, and other demographics; sadly, Canada ranks as having the 8th highest gender income gap, according to the Organisation for Economic Co-operation and Development. Currently in Canada, women who work full-time earn 75 cents to every dollar a man makes, even less for Indigenous, disabled, racialized, and immigrant women. </p>
+
+<p>	Thankfully, the income gap has reduced between the years of 1998-2018, which according to Statistics Canada is due to the shift in the distribution of male and female workers, as well as women’s increased educational levels, and a decline in the share of men in unionized work environments. Although there persists an income gap between genders, there are some theories to explain that remaining gap. Women are over-represented as part-time workers, often because of family responsibilities. </p>
+
+<p>	For a more recent snapshot of the gender income gap, our team has gathered data from the most recent census in 2016. This data included a gender breakdown of the population, income levels, and education levels in the city of Ottawa. Having data from the 2011 census would have been beneficial to this analysis, unfortunately, the 2011 census was the short-form version and did not offer the data that we needed to have a proper analysis. Despite this challenge, the team was able to create visualizations that give an impression of how the gender income gap is represented here in the nation’s capitol. </p>
+
+<p>	As one can see, there are more women in the population distribution of the city of Ottawa. Now, looking at the differences in income levels, women are more represented in the lower income levels. Once the income levels reach $70k+, the demographics flip, and we see men leading the rest of the income classes. Once the income classes reach $100k+, male representation in those classes are nearly doubled than that of women. Things become interesting once we start looking at the education levels attained between men and women. Women lead in every education level attained except for certification in trades and apprenticeships, master’s degrees, and doctorates. </p>
+
+<p>	According to the findings made, there are more women in Ottawa, they are more educated than men, however, they earn less than income than men. Some experts believe that the fact that women are over-represented in part-time employment and often have more family responsibilities, explains why the income gap has not closed more in the past decades. However, few rarely mention the persistent existence of gender-based biases in a lot of typically male-dominated work environments.</p>
+    </div>
+    <div class="card">
+    <h2>TITLE HEADING</h2>
+    <h5>Title description, Sep 2, 2017</h5>
+          <div class="fakeimg" style="height:200px;">Image</div>
+
+
+      <p>Some text..</p>
+      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+    </div>
+  </div>
+  <div class="rightcolumn">
+    <div class="card">
+      <h2>About Us</h2>
+      <img src="img/beaver.png" style="margin-left: 130px; margin-right: auto;">
+      <p>From the Beaver's Mouth is a student-run news source outlet which tackles critical topics in a way that is interesting and easy-to-understand.</p>
+    </div>
+    <div class="card">
+      <h3>List of References</h3>
+      <div class="fakeimg">Reference One</div><br>
+      <div class="fakeimg">Reference Two</div><br>
+      <div class="fakeimg">Reference Three</div>
+    </div>
+    <div class="card">
+      <h3></h3>
+      <p></p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <h2>GEOM 4001 Assignment Four</h2>
+</div>
+
+</body>
+</html>
